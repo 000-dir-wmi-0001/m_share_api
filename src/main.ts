@@ -2,7 +2,6 @@ import { NestFactory } from '@nestjs/core';
 import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { AppModule } from './app.module';
-import type { Request, Response } from 'express';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -44,23 +43,6 @@ async function bootstrap() {
       },
     }),
   );
-
-  // Health check endpoint
-  app.getHttpServer().on('request', (req: Request, res: Response) => {
-    if (req.url === '/health' && req.method === 'GET') {
-      res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(
-        JSON.stringify({
-          status: 'ok',
-          environment: nodeEnv,
-          database: 'connected',
-          timestamp: new Date().toISOString(),
-          version: '1.0.0',
-          endpoints: 67,
-        }),
-      );
-    }
-  });
 
   await app.listen(port);
 
