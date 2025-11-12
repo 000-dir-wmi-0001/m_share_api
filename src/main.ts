@@ -67,7 +67,6 @@ async function bootstrap() {
   console.log(`\n✅ M-Share API v1.0.0`);
   console.log(`✅ Environment: ${nodeEnv}`);
   console.log(`✅ Server: http://localhost:${port}`);
-  console.log(`✅ Allowed Origins: ${allowedOrigins.join(', ')}`);
   console.log(`✅ Health Check: http://localhost:${port}/health`);
   console.log(`✅ All 67 endpoints ready\n`);
 }
