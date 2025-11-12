@@ -11,21 +11,16 @@ async function bootstrap() {
   const port = configService.get<number>('API_PORT') || 3000;
   const nodeEnv = configService.get<string>('NODE_ENV') || 'development';
 
-  // Support multiple frontend URLs from environment variable
-  const frontendUrlsEnv = configService.get<string>('FRONTEND_URLS') || 'http://localhost:3001';
-  const allowedOrigins = frontendUrlsEnv.split(',').map((url) => url.trim());
-
-  // Add default ports if not in the list
-  if (!allowedOrigins.includes('http://localhost:3001')) {
-    allowedOrigins.push('http://localhost:3001');
-  }
-  if (!allowedOrigins.includes('http://localhost:3000')) {
-    allowedOrigins.push('http://localhost:3000');
-  }
-
   // Enable CORS - MUST be before versioning
   app.enableCors({
-    origin: allowedOrigins,
+    origin: [
+      'http://localhost:3000',
+      'http://localhost:3001',
+      'http://localhost:3002',
+      'http://localhost:3003',
+      'https://m-share.vercel.app',
+      'https://m-share-api.onrender.com',
+    ],
     credentials: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     allowedHeaders: 'Content-Type,Authorization',
