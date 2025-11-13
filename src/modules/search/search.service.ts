@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Project, ProjectFile, User, Team } from '../../common/entities';
+import { Project, ProjectFile, User } from '../../common/entities';
 import { UserStatus, ProjectStatus, Visibility } from '../../common/enums';
 
 @Injectable()
@@ -13,8 +13,6 @@ export class SearchService {
     private filesRepository: Repository<ProjectFile>,
     @InjectRepository(User)
     private usersRepository: Repository<User>,
-    @InjectRepository(Team)
-    private teamsRepository: Repository<Team>,
   ) {}
 
   async globalSearch(
@@ -25,7 +23,6 @@ export class SearchService {
     projects: any[];
     files: any[];
     users: any[];
-    teams: any[];
     total: number;
   }> {
     const searchQuery = `%${query}%`;
@@ -53,13 +50,6 @@ export class SearchService {
       .skip(offset)
       .getManyAndCount();
 
-    const [teams, teamCount] = await this.teamsRepository
-      .createQueryBuilder('team')
-      .where('team.name ILIKE :query OR team.description ILIKE :query', { query: searchQuery })
-      .take(limit)
-      .skip(offset)
-      .getManyAndCount();
-
     return {
       projects: projects.map(p => ({
         id: p.id,
@@ -79,13 +69,7 @@ export class SearchService {
         email: u.email,
         type: 'user',
       })),
-      teams: teams.map(t => ({
-        id: t.id,
-        name: t.name,
-        description: t.description,
-        type: 'team',
-      })),
-      total: projectCount + fileCount + userCount + teamCount,
+      total: projectCount + fileCount + userCount,
     };
   }
 
@@ -189,33 +173,6 @@ export class SearchService {
         name: u.name,
         email: u.email,
         avatar_url: u.avatar_url,
-      })),
-      total,
-    };
-  }
-
-  async searchTeams(
-    query: string,
-    limit: number = 20,
-    offset: number = 0,
-  ): Promise<{ data: any[]; total: number }> {
-    const searchQuery = `%${query}%`;
-
-    const [teams, total] = await this.teamsRepository
-      .createQueryBuilder('team')
-      .where('team.name ILIKE :query OR team.description ILIKE :query', { query: searchQuery })
-      .orderBy('team.created_at', 'DESC')
-      .take(limit)
-      .skip(offset)
-      .getManyAndCount();
-
-    return {
-      data: teams.map(t => ({
-        id: t.id,
-        name: t.name,
-        description: t.description,
-        logo_url: t.logo_url,
-        member_count: t.member_count,
       })),
       total,
     };

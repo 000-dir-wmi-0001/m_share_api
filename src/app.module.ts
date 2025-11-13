@@ -7,13 +7,9 @@ import { getDatabaseConfig } from './database/config';
 import { User } from './common/entities';
 import {
   UsersModule,
-  TeamsModule,
-  TeamMembersModule,
-  TeamInvitationsModule,
   ProjectsModule,
   ProjectItemsModule,
   ProjectFilesModule,
-  ProjectAccessModule,
   ActivitiesModule,
   DonationsModule,
   SponsorshipsModule,
@@ -22,6 +18,7 @@ import {
   NotificationsModule,
   AnalyticsModule,
   SettingsModule,
+  StorageModule,
 } from './modules';
 
 @Module({
@@ -37,15 +34,12 @@ import {
         getDatabaseConfig(configService),
     }),
     TypeOrmModule.forFeature([User]),
+    StorageModule,
     UsersModule,
     AuthModule,
-    TeamsModule,
-    TeamMembersModule,
-    TeamInvitationsModule,
     ProjectsModule,
     ProjectItemsModule,
     ProjectFilesModule,
-    ProjectAccessModule,
     ActivitiesModule,
     DonationsModule,
     SponsorshipsModule,

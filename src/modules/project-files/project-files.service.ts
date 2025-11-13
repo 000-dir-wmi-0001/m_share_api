@@ -2,6 +2,7 @@ import { Injectable, NotFoundException, ForbiddenException, BadRequestException 
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ProjectFile, FileVersion } from '../../common/entities';
+import { StorageService } from '../storage/storage.service';
 
 @Injectable()
 export class ProjectFilesService {
@@ -10,6 +11,7 @@ export class ProjectFilesService {
     private filesRepository: Repository<ProjectFile>,
     @InjectRepository(FileVersion)
     private versionsRepository: Repository<FileVersion>,
+    private storageService: StorageService,
   ) {}
 
   async uploadFile(
