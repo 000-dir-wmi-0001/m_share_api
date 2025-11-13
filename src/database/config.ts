@@ -2,12 +2,8 @@ import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { ConfigService } from '@nestjs/config';
 import {
   User,
-  Team,
-  TeamMember,
-  TeamInvitation,
   Project,
   ProjectItem,
-  ProjectAccess,
   Activity,
   Donation,
   Sponsorship,
@@ -15,7 +11,6 @@ import {
   FileVersion,
   Notification,
   UserSetting,
-  TeamSetting,
 } from '../common/entities';
 
 export const getDatabaseConfig = (
@@ -36,18 +31,11 @@ export const getDatabaseConfig = (
           User,
           UserSetting,
 
-          // Team Management
-          Team,
-          TeamMember,
-          TeamInvitation,
-          TeamSetting,
-
           // Project Management
           Project,
           ProjectItem,
           ProjectFile,
           FileVersion,
-          ProjectAccess,
 
           // Activity & Tracking
           Activity,
@@ -85,18 +73,11 @@ export const getDatabaseConfig = (
       User,
       UserSetting,
 
-      // Team Management
-      Team,
-      TeamMember,
-      TeamInvitation,
-      TeamSetting,
-
       // Project Management
       Project,
       ProjectItem,
       ProjectFile,
       FileVersion,
-      ProjectAccess,
 
       // Activity & Tracking
       Activity,

@@ -3,12 +3,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import {
   User,
-  Team,
-  TeamMember,
-  TeamInvitation,
   Project,
   ProjectItem,
-  ProjectAccess,
   Activity,
   Donation,
   Sponsorship,
@@ -19,12 +15,8 @@ import { getDatabaseConfig } from './config';
   imports: [
     TypeOrmModule.forFeature([
       User,
-      Team,
-      TeamMember,
-      TeamInvitation,
       Project,
       ProjectItem,
-      ProjectAccess,
       Activity,
       Donation,
       Sponsorship,

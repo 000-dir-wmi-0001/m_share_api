@@ -1,12 +1,8 @@
 import { DataSourceOptions } from 'typeorm';
 import {
   User,
-  Team,
-  TeamMember,
-  TeamInvitation,
   Project,
   ProjectItem,
-  ProjectAccess,
   Activity,
   Donation,
   Sponsorship,
@@ -21,12 +17,8 @@ export const dataSourceOptions: DataSourceOptions = {
   database: process.env.PGDATABASE,
   entities: [
     User,
-    Team,
-    TeamMember,
-    TeamInvitation,
     Project,
     ProjectItem,
-    ProjectAccess,
     Activity,
     Donation,
     Sponsorship,

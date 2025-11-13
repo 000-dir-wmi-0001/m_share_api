@@ -14,7 +14,6 @@ export class ActivitiesService {
 
   async logActivity(data: {
     user_id: string;
-    team_id?: string;
     project_id?: string;
     type: string;
     action: string;
@@ -25,7 +24,6 @@ export class ActivitiesService {
   }): Promise<ActivityResponseDto> {
     const activity = this.activitiesRepository.create({
       user_id: data.user_id,
-      team_id: data.team_id,
       project_id: data.project_id,
       type: data.type as ActivityType,
       action: data.action,
@@ -42,20 +40,6 @@ export class ActivitiesService {
   async getUserActivities(userId: string, limit: number = 50, offset: number = 0) {
     const [activities, total] = await this.activitiesRepository.findAndCount({
       where: { user_id: userId },
-      take: limit,
-      skip: offset,
-      order: { created_at: 'DESC' },
-    });
-
-    return {
-      data: activities.map(a => this.formatActivityResponse(a)),
-      total,
-    };
-  }
-
-  async getTeamActivities(teamId: string, limit: number = 50, offset: number = 0) {
-    const [activities, total] = await this.activitiesRepository.findAndCount({
-      where: { team_id: teamId },
       take: limit,
       skip: offset,
       order: { created_at: 'DESC' },

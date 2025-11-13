@@ -11,15 +11,12 @@ import {
 } from 'typeorm';
 import { ProjectStatus, Visibility } from '../enums';
 import { User } from './user.entity';
-import { Team } from './team.entity';
 import { ProjectItem } from './project-item.entity';
-import { ProjectAccess } from './project-access.entity';
 import { Activity } from './activity.entity';
 import { ProjectFile } from './project-file.entity';
 
 @Entity('projects')
 @Index(['owner_id'])
-@Index(['team_id'])
 @Index(['slug'], { unique: true })
 @Index(['created_at'])
 export class Project {
@@ -28,9 +25,6 @@ export class Project {
 
   @Column({ type: 'uuid' })
   owner_id: string;
-
-  @Column({ type: 'uuid', nullable: true })
-  team_id: string;
 
   @Column({ type: 'varchar', length: 255 })
   name: string;
@@ -93,21 +87,11 @@ export class Project {
   @JoinColumn({ name: 'owner_id' })
   owner: User;
 
-  @ManyToOne(() => Team, (team) => team.projects, {
-    onDelete: 'CASCADE',
-    nullable: true,
-  })
-  @JoinColumn({ name: 'team_id' })
-  team: Team;
-
   @OneToMany(() => ProjectItem, (item) => item.project)
   items: ProjectItem[];
 
   @OneToMany(() => ProjectFile, (file) => file.project)
   files: ProjectFile[];
-
-  @OneToMany(() => ProjectAccess, (access) => access.project)
-  access_permissions: ProjectAccess[];
 
   @OneToMany(() => Activity, (activity) => activity.project)
   activities: Activity[];

@@ -9,7 +9,6 @@ import {
 } from 'typeorm';
 import { Exclude } from 'class-transformer';
 import { UserStatus } from '../enums';
-import { TeamMember } from './team-member.entity';
 import { Project } from './project.entity';
 import { Activity } from './activity.entity';
 import { Donation } from './donation.entity';
@@ -76,9 +75,6 @@ export class User {
   last_login_at: Date;
 
   // Relations
-  @OneToMany(() => TeamMember, (teamMember) => teamMember.user)
-  team_memberships: TeamMember[];
-
   @OneToMany(() => Project, (project) => project.owner)
   projects: Project[];
 

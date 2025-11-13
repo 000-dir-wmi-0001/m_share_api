@@ -2,12 +2,8 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import {
   User,
-  Team,
-  TeamMember,
-  TeamInvitation,
   Project,
   ProjectItem,
-  ProjectAccess,
   Activity,
   Donation,
   Sponsorship,
@@ -17,12 +13,8 @@ import {
   imports: [
     TypeOrmModule.forFeature([
       User,
-      Team,
-      TeamMember,
-      TeamInvitation,
       Project,
       ProjectItem,
-      ProjectAccess,
       Activity,
       Donation,
       Sponsorship,
